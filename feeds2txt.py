@@ -30,7 +30,7 @@ def getHeadlines(rss_url):
 # print(str(today))
 # Iterate over the allheadlines list and print each headline
 for key, url in newsurls.items():
-	# print(key)
+	print("# "+key+" "+"-"*20)
 	allheadlines.extend(getHeadlines(url))
 	for hl in allheadlines:
 		try:
