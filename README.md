@@ -2,7 +2,7 @@
 
 ## What is it?
 
-Read some RSS feeds, output item titles, dates and URLs to text.
+Read some RSS feeds, output item titles, dates and URLs to text.  
 Use it in crontab or pipe output to more or less.
 
 ## TODO
@@ -18,5 +18,5 @@ Use it in crontab or pipe output to more or less.
 
 ## History
 
-Initial release: 2021-03-24
-Upload to github: 2021-03-26
+* Initial release: 2021-03-24
+* Upload to github: 2021-03-26
