@@ -1,12 +1,17 @@
-= feeds2txt.py =
+= feeds2txt.py
 
-== What is it? ==
+== What is it?
 Read some RSS feeds, output item titles, dates and URLs to text.
 Use it in crontab or pipe output to more or less.
 
-== TODO ==
+== TODO
 - move feeds and options to config file.
 - add lastseen option to avoid redisplaying already seen RSS items.
+
+== Required Python modules
+- feedparser
+- datetime
+- dateutil
 
 == History ==
 Initial release: 2021-03-24
