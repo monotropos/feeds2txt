@@ -7,16 +7,19 @@ Use it in crontab or pipe output to more or less.
 
 ## TODO
 
-- move feeds and options to config file.
-- add lastseen option to avoid redisplaying already seen RSS items.
+* add lastseen option to avoid redisplaying already seen RSS items
 
 ## Required Python modules
 
-- feedparser
-- datetime
-- dateutil
+* configparser
+* datetime
+* dateutil
+* feedparser
 
 ## History
 
-* Initial release: 2021-03-24
-* Upload to github: 2021-03-26
+* 2021-03-24: Initial release
+* 2021-03-26: Upload to github
+* 2021-04-01: read feeds and parameters from .ini file
+
+ vim:ft=markdown

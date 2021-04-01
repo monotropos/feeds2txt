@@ -2,20 +2,21 @@
 import feedparser
 from datetime import datetime
 from dateutil import parser
+from configparser import ConfigParser
 
 
-# List of RSS feeds that we will fetch and combine
-newsurls = {
-	"vimeo.dionysia":		"https://vimeo.com/user12810887/videos/rss",
-	"vimeo.katzourakis":	"https://vimeo.com/user6077796/videos/rss",
-	"vimeo.movieteller":	"https://vimeo.com/movieteller/videos/rss",
-	"youtube.BrodieRobertson":	"https://www.youtube.com/feeds/videos.xml?channel_id=UCld68syR8Wi-GY_n4CaoJGA",
-	"reddit.greece":	"https://www.reddit.com/r/greece.rss",
-	"hackernews": "https://news.ycombinator.com/rss",
-}
+# Read config.ini file
+config_object = ConfigParser()
+config_object.read("feeds2txt.ini")
+newsurls = config_object["FEEDS"]
+parameters = config_object["PARAMETERS"]
+try:
+	days2show = int(parameters["days2show"])
+except:
+	days2show = 1
+
 allheadlines = []
 today = datetime.today().date()
-days2show = 1
 
 
 # Function grabs the rss feed headlines (titles) and returns them as a list

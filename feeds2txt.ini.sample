@@ -1,0 +1,8 @@
+[FEEDS]
+aptblogs.kavala = https://aptlogs.com/scribble/kavala/feed
+vimeo.movieteller = https://vimeo.com/movieteller/videos/rss
+reddit.greece = https://www.reddit.com/r/greece.rss
+hackernews = https://news.ycombinator.com/rss
+
+[PARAMETERS]
+days2show = 1
