@@ -3,11 +3,17 @@ import feedparser
 from datetime import datetime
 from dateutil import parser
 from configparser import ConfigParser
+import sys
 
 
-# Read config.ini file
+if len(sys.argv) > 1:
+	inifile = sys.argv[1]
+else:
+	inifile = "feeds2txt.ini"
+
+# Read .ini file
 config_object = ConfigParser()
-config_object.read("feeds2txt.ini")
+config_object.read(inifile)
 newsurls = config_object["FEEDS"]
 parameters = config_object["PARAMETERS"]
 try:

@@ -15,11 +15,13 @@ Use it in crontab or pipe output to more or less.
 * datetime
 * dateutil
 * feedparser
+* sys
 
 ## History
 
 * 2021-03-24: Initial release
 * 2021-03-26: Upload to github
-* 2021-04-01: read feeds and parameters from .ini file
+* 2021-04-01: Read feeds and parameters from .ini file
+* 2021-04-01: Read .ini file name as argument
 
  vim:ft=markdown
