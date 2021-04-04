@@ -7,7 +7,7 @@ Use it in crontab or pipe output to more or less.
 
 ## TODO
 
-* add lastseen option to avoid redisplaying already seen RSS items
+* ...
 
 ## Required Python modules
 
@@ -23,5 +23,6 @@ Use it in crontab or pipe output to more or less.
 * 2021-03-26: Upload to github
 * 2021-04-01: Read feeds and parameters from .ini file
 * 2021-04-01: Read .ini file name as argument
+* 2021-04-04: Add lastseen option to avoid redisplaying already seen RSS items
 
  vim:ft=markdown

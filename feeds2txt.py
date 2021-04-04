@@ -6,25 +6,6 @@ from configparser import ConfigParser
 import sys
 
 
-if len(sys.argv) > 1:
-	inifile = sys.argv[1]
-else:
-	inifile = "feeds2txt.ini"
-
-# Read .ini file
-config_object = ConfigParser()
-config_object.read(inifile)
-newsurls = config_object["FEEDS"]
-parameters = config_object["PARAMETERS"]
-try:
-	days2show = int(parameters["days2show"])
-except:
-	days2show = 1
-
-allheadlines = []
-today = datetime.today().date()
-
-
 # Function grabs the rss feed headlines (titles) and returns them as a list
 def getHeadlines(rss_url):
 	headlines = []
@@ -34,20 +15,59 @@ def getHeadlines(rss_url):
 	return headlines
 
 
-# print(str(today))
-# Iterate over the allheadlines list and print each headline
-for key, url in newsurls.items():
-	print("# "+key+" "+"-"*20)
-	allheadlines.extend(getHeadlines(url))
-	for hl in allheadlines:
-		try:
-			pdate = hl["updated"]
-		except KeyError:
-			pdate = hl["published"]
-		d = parser.parse(pdate).date()
-		days = (today - d).days
-		if days <= days2show:
-			print(key+" » "+hl["title"]+" @"+pdate+" | "+hl["link"])
-	allheadlines = []
+if len(sys.argv) > 1:
+	inifile = sys.argv[1]
+else:
+	inifile = "feeds2txt.ini"
 
+# Read .ini file
+config_object = ConfigParser()
+config_object.read(inifile)
+try:
+	newsurls = config_object["FEEDS"]
+except KeyError:
+	newsurls = []
+
+try:
+	parameters = config_object["PARAMETERS"]
+	time2show = int(parameters["time2show"])
+except KeyError:
+	time2show = 86400
+except NameError:
+	time2show = 86400
+
+try:
+	# lastseen = parser.parse(parameters["lastseen"]).timestamp()
+	lastseen = float(parameters["lastseen"])
+	print("Last update: " + parameters["lastseen"])
+except KeyError:
+	lastseen = datetime.now().timestamp() - time2show
+except NameError:
+	lastseen = datetime.now().timestamp() - time2show
+
+allheadlines = []
+
+# Iterate over the allheadlines list and print each headline
+if len(newsurls):
+	for key, url in newsurls.items():
+		print("# "+key+" "+"-"*20)
+		allheadlines.extend(getHeadlines(url))
+		for hl in allheadlines:
+			try:
+				pdate = hl["updated"]
+			except KeyError:
+				pdate = hl["published"]
+			d = parser.parse(pdate).timestamp()
+			difftime = d - lastseen
+			if difftime > 0:
+				print(key+" » "+hl["title"]+" @"+pdate+" | "+hl["link"])
+		allheadlines = []
+
+# Write .ini file
+config_object["PARAMETERS"] = {
+	"time2show": time2show,
+	"lastseen": datetime.now().timestamp()
+}
+with open(inifile, 'w') as conf:
+	config_object.write(conf)
 # end of code

@@ -1,3 +1,4 @@
 .gitignore
 __pycache__/
-feeds2txt.ini
+*.ini
+feeds2txt.ini.good
