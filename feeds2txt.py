@@ -31,18 +31,14 @@ except KeyError:
 try:
 	parameters = config_object["PARAMETERS"]
 	time2show = int(parameters["time2show"])
-except KeyError:
-	time2show = 86400
-except NameError:
+except (KeyError, NameError):
 	time2show = 86400
 
 try:
 	# lastseen = parser.parse(parameters["lastseen"]).timestamp()
 	lastseen = float(parameters["lastseen"])
 	print("Last update: " + parameters["lastseen"])
-except KeyError:
-	lastseen = datetime.now().timestamp() - time2show
-except NameError:
+except (KeyError, NameError):
 	lastseen = datetime.now().timestamp() - time2show
 
 allheadlines = []
