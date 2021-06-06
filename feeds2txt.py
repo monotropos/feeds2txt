@@ -45,6 +45,8 @@ allheadlines = []
 # Iterate over the allheadlines list and print each headline
 if len(newsurls):
     for key, url in newsurls.items():
+        if key.startswith('useless.'):
+            key.replace('useless', '@' * 10)
         print("# "+key+" "+"-"*20)
         allheadlines.extend(getHeadlines(url))
         for hl in allheadlines:
@@ -55,7 +57,8 @@ if len(newsurls):
             d = parser.parse(pdate).timestamp()
             difftime = d - lastseen
             if difftime > 0:
-                print(key + " » " + hl["title"] + " @" + pdate + " | " + hl["link"])
+                print(key + " » " + hl["title"] + " @" + pdate + " | "
+                      + hl["link"])
 
         allheadlines = []
 
