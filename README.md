@@ -24,5 +24,8 @@ Use it in crontab or pipe output to more or less.
 * 2021-04-01: Read feeds and parameters from .ini file
 * 2021-04-01: Read .ini file name as argument
 * 2021-04-04: Add lastseen option to avoid redisplaying already seen RSS items
+* 2021-06-08: Add line dividers between feeds, like "NN = --", where NN is any text
+
+
 
  vim:ft=markdown
