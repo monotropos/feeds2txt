@@ -41,15 +41,15 @@ except (KeyError, NameError):
     lastseen = datetime.now().timestamp() - time2show
 
 allheadlines = []
+printheadlines = []
 
 # Iterate over the allheadlines list and print each headline
 if len(newsurls):
     for key, url in newsurls.items():
         # When url is "--" just print a line divider
         if url == "--":
-            print("×"*20, key, "×"*20)
+            print(">", "»"*30, key, "«"*30)
             continue
-        print(f"# {key} "+"-"*20)
         allheadlines.extend(getHeadlines(url))
         for hl in allheadlines:
             try:
@@ -59,8 +59,15 @@ if len(newsurls):
             d = parser.parse(pdate).timestamp()
             difftime = d - lastseen
             if difftime > 0:
-                print(" » " + hl["title"] + " @" + pdate + " — " + hl["link"])
+                printheadlines.append(" » " + hl["title"]
+                                      + " @" + pdate + " — " + hl["link"])
 
+        if len(printheadlines) > 0:
+            print(f">> {key} "+"-"*20)
+            for hl in printheadlines:
+                print(hl)
+
+        printheadlines = []
         allheadlines = []
 
 # Write .ini file
