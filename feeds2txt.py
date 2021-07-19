@@ -9,7 +9,10 @@ import sys
 # Function grabs the rss feed headlines (titles) and returns them as a list
 def getHeadlines(rss_url):
     headlines = []
-    feed = feedparser.parse(rss_url)
+    try:
+        feed = feedparser.parse(rss_url)
+    except:
+        return headlines
     for newsitem in feed['items']:
         headlines.append(newsitem)
     return headlines
