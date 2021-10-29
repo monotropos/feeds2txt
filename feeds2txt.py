@@ -5,13 +5,18 @@ from dateutil import parser
 from configparser import ConfigParser
 import sys
 
+# Allow insecure connections to sites (especially after letsencrypt fiasco)
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
+
 
 # Function grabs the rss feed headlines (titles) and returns them as a list
 def getHeadlines(rss_url):
     headlines = []
     try:
         feed = feedparser.parse(rss_url)
-    except:
+    except Exception as e:
+        print(e)
         return headlines
     for newsitem in feed['items']:
         headlines.append(newsitem)
@@ -51,7 +56,8 @@ if len(newsurls):
     for key, url in newsurls.items():
         # When url is "--" just print a line divider
         if url == "--":
-            print(">", "»"*30, key, "«"*30)
+            # print(">", "»"*30, key, "«"*30)
+            print(">", key)
             continue
         allheadlines.extend(getHeadlines(url))
         for hl in allheadlines:
@@ -62,13 +68,17 @@ if len(newsurls):
             d = parser.parse(pdate).timestamp()
             difftime = d - lastseen
             if difftime > 0:
-                printheadlines.append(" » " + hl["title"]
-                                      + " @" + pdate + " — " + hl["link"])
+                # printheadlines.append("» " + hl["title"].replace("&#039;", "’")
+                #                       + " — " + pdate + "\n\t" + hl["link"])
+                printheadlines.append(">>> " + hl["title"].replace("&#039;", "’")
+                                      + " — " + pdate + "\n>>>> " + hl["link"])
 
         if len(printheadlines) > 0:
-            print(f">> {key} "+"-"*20)
+            # print(f">> ––– {key} "+"-"*20)
+            print(f">> {key}")
             for hl in printheadlines:
                 print(hl)
+            print("\n")
 
         printheadlines = []
         allheadlines = []
