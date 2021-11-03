@@ -57,7 +57,7 @@ if len(newsurls):
         # When url is "--" just print a line divider
         if url == "--":
             # print(">", "»"*30, key, "«"*30)
-            print(">", key)
+            print("#", key)
             continue
         allheadlines.extend(getHeadlines(url))
         for hl in allheadlines:
@@ -70,12 +70,12 @@ if len(newsurls):
             if difftime > 0:
                 # printheadlines.append("» " + hl["title"].replace("&#039;", "’")
                 #                       + " — " + pdate + "\n\t" + hl["link"])
-                printheadlines.append(">>> " + hl["title"].replace("&#039;", "’")
-                                      + " — " + pdate + "\n>>>> " + hl["link"])
+                printheadlines.append("### " + hl["title"].replace("&#039;", "’")
+                                      + " — " + pdate + "\n### " + hl["link"])
 
         if len(printheadlines) > 0:
             # print(f">> ––– {key} "+"-"*20)
-            print(f">> {key}")
+            print(f"## {key}")
             for hl in printheadlines:
                 print(hl)
             print("\n")
