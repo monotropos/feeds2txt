@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+
 import feedparser
 from datetime import datetime
 from dateutil import parser
@@ -56,8 +57,8 @@ if len(newsurls):
     for key, url in newsurls.items():
         # When url is "--" just print a line divider
         if url == "--":
-            # print(">", "»"*30, key, "«"*30)
-            print("#", key)
+            print("#", "»"*20, key, "«"*(40-len(key)))
+            # print("#", key)
             continue
         allheadlines.extend(getHeadlines(url))
         for hl in allheadlines:
