@@ -10,9 +10,6 @@ import sys
 import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 
-AFTER_ITEM = "\n"
-AFTER_SECTION = "-"*80 + "\n"
-
 
 # Function grabs the rss feed headlines (titles) and returns them as a list
 def getHeadlines(rss_url):
@@ -35,13 +32,14 @@ else:
 # Read .ini file
 config_object = ConfigParser()
 config_object.read(inifile)
+parameters = config_object["PARAMETERS"]
+
 try:
     newsurls = config_object["FEEDS"]
 except KeyError:
     newsurls = []
 
 try:
-    parameters = config_object["PARAMETERS"]
     time2show = int(parameters["time2show"])
 except (KeyError, NameError):
     time2show = 86400
@@ -51,6 +49,17 @@ try:
     print("Last update: " + parameters["lastseen"])
 except (KeyError, NameError):
     lastseen = datetime.now().timestamp() - time2show
+
+try:
+    delimiter_item = parameters["delimiter_item"]
+except (KeyError, NameError):
+    delimiter_item = ""
+
+try:
+    delimiter_section = parameters["delimiter_section"]
+except (KeyError, NameError):
+    delimiter_section = ""
+
 
 allheadlines = []
 printheadlines = []
@@ -81,8 +90,8 @@ if len(newsurls):
             # print(f">> ––– {key} "+"-"*20)
             print(f"## {key}")
             for hl in printheadlines:
-                print(hl + AFTER_ITEM)
-            print(AFTER_SECTION)
+                print(hl + delimiter_item)
+            print(delimiter_section)
 
         printheadlines = []
         allheadlines = []
