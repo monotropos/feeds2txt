@@ -10,6 +10,9 @@ import sys
 import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 
+AFTER_ITEM = "\n"
+AFTER_SECTION = "-"*80 + "\n"
+
 
 # Function grabs the rss feed headlines (titles) and returns them as a list
 def getHeadlines(rss_url):
@@ -71,15 +74,15 @@ if len(newsurls):
             if difftime > 0:
                 # printheadlines.append("» " + hl["title"].replace("&#039;", "’")
                 #                       + " — " + pdate + "\n\t" + hl["link"])
-                printheadlines.append("### " + hl["title"].replace("&#039;", "’")
-                                      + " — " + pdate + "\n### " + hl["link"])
+                printheadlines.append(hl["title"].replace("&#039;", "’")
+                                      + " — " + pdate + "\n→ " + hl["link"])
 
         if len(printheadlines) > 0:
             # print(f">> ––– {key} "+"-"*20)
             print(f"## {key}")
             for hl in printheadlines:
-                print(hl)
-            print("\n")
+                print(hl + AFTER_ITEM)
+            print(AFTER_SECTION)
 
         printheadlines = []
         allheadlines = []
