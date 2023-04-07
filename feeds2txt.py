@@ -4,6 +4,7 @@ import feedparser
 from datetime import datetime
 from dateutil import parser
 from configparser import ConfigParser
+from ast import literal_eval
 import sys
 
 # Allow insecure connections to sites (especially after letsencrypt fiasco)
@@ -51,12 +52,12 @@ except (KeyError, NameError):
     lastseen = datetime.now().timestamp() - time2show
 
 try:
-    delimiter_item = parameters["delimiter_item"]
+    delimiter_item = literal_eval(parameters["delimiter_item"])
 except (KeyError, NameError):
     delimiter_item = ""
 
 try:
-    delimiter_section = parameters["delimiter_section"]
+    delimiter_section = literal_eval(parameters["delimiter_section"])
 except (KeyError, NameError):
     delimiter_section = ""
 
