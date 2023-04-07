@@ -4,12 +4,14 @@ import feedparser
 from datetime import datetime
 from dateutil import parser
 from configparser import ConfigParser
-from ast import literal_eval
 import sys
 
 # Allow insecure connections to sites (especially after letsencrypt fiasco)
 import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
+
+delimiter_item = "\n"
+delimiter_section = "-"*100 + "\n"
 
 
 # Function grabs the rss feed headlines (titles) and returns them as a list
@@ -51,16 +53,6 @@ try:
 except (KeyError, NameError):
     lastseen = datetime.now().timestamp() - time2show
 
-try:
-    delimiter_item = literal_eval(parameters["delimiter_item"])
-except (KeyError, NameError):
-    delimiter_item = ""
-
-try:
-    delimiter_section = literal_eval(parameters["delimiter_section"])
-except (KeyError, NameError):
-    delimiter_section = ""
-
 
 allheadlines = []
 printheadlines = []
@@ -84,8 +76,9 @@ if len(newsurls):
             if difftime > 0:
                 # printheadlines.append("» " + hl["title"].replace("&#039;", "’")
                 #                       + " — " + pdate + "\n\t" + hl["link"])
-                printheadlines.append(hl["title"].replace("&#039;", "’")
-                                      + " — " + pdate + "\n→ " + hl["link"])
+                printheadlines.append("### "
+                                      + hl["title"].replace("&#039;", "’").replace("&#x27;", "’")
+                                      + " — " + pdate + "\n### " + hl["link"])
 
         if len(printheadlines) > 0:
             # print(f">> ––– {key} "+"-"*20)
