@@ -10,9 +10,10 @@ import sys
 import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 
+
+# define delimiters
 delimiter_item = "\n"
 delimiter_section = "-"*100 + "\n"
-
 
 # Function grabs the rss feed headlines (titles) and returns them as a list
 def getHeadlines(rss_url):
@@ -62,8 +63,9 @@ if len(newsurls):
     for key, url in newsurls.items():
         # When url is "--" just print a line divider
         if url == "--":
+            print("#", "-"*60)
             print("#", "»"*20, key, "«"*(40-len(key)))
-            # print("#", key)
+            print("#", "-"*60)
             continue
         allheadlines.extend(getHeadlines(url))
         for hl in allheadlines:
@@ -74,11 +76,9 @@ if len(newsurls):
             d = parser.parse(pdate).timestamp()
             difftime = d - lastseen
             if difftime > 0:
-                # printheadlines.append("» " + hl["title"].replace("&#039;", "’")
-                #                       + " — " + pdate + "\n\t" + hl["link"])
-                printheadlines.append("### "
-                                      + hl["title"].replace("&#039;", "’").replace("&#x27;", "’")
-                                      + " — " + pdate + "\n### " + hl["link"])
+                title = hl["title"].replace("&#039;", "’").replace("&#x27;", "’").replace("&quot;", '”')
+                title = title.replace("&#x2f;", "&").replace("&amp;", "&")        # must be the last replace
+                printheadlines.append("### " + title + " — " + pdate + "\n### " + hl["link"])
 
         if len(printheadlines) > 0:
             # print(f">> ––– {key} "+"-"*20)
