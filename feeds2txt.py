@@ -13,7 +13,11 @@ ssl._create_default_https_context = ssl._create_unverified_context
 
 
 # define delimiters
-delimiter_item = "\n"
+CHAR_ABOVE_TITLE = "."
+CHAR_BELOW_TITLE = "^"
+CHAR_BELOW_SECTION = "–"
+CHAR_BELOW_FEED = "—"
+DELIMITER_ITEM = "\n"
 
 
 # Function to print separator lines
@@ -70,9 +74,9 @@ if len(newsurls):
     for key, url in newsurls.items():
         # When url is "--" just print a line divider
         if url == "--":
-            sep_line("#", "-", 58)
+            sep_line("#", CHAR_ABOVE_TITLE, 58)
             print("#", "»"*20, key, "«"*(36-len(key)))
-            sep_line("#", "-", 58)
+            sep_line("#", CHAR_BELOW_TITLE, 58)
             continue
         allheadlines.extend(getHeadlines(url))
         for hl in allheadlines:
@@ -89,10 +93,10 @@ if len(newsurls):
 
         if len(printheadlines) > 0:
             print(f"## {key}")
-            sep_line("##", "-", 57)
+            sep_line("##", CHAR_BELOW_FEED, 57)
             for hl in printheadlines:
-                print(hl + delimiter_item)
-            sep_line("", "-", 59)
+                print(hl + DELIMITER_ITEM)
+            sep_line("", CHAR_BELOW_SECTION, 59)
 
         printheadlines = []
         allheadlines = []
