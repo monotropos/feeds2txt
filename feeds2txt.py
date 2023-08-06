@@ -17,10 +17,9 @@ CHAR_ABOVE_TITLE = "."
 CHAR_BELOW_TITLE = "^"
 CHAR_BELOW_SECTION = "–"
 CHAR_BELOW_FEED = "—"
-DELIMITER_ITEM = "\n"
 
 
-# Function to print separator lines
+# Function to output separator lines
 def sep_line(start, character, n):
     print(start, character*n)
 
@@ -78,6 +77,7 @@ if len(newsurls):
             print("#", "»"*20, key, "«"*(36-len(key)))
             sep_line("#", CHAR_BELOW_TITLE, 58)
             continue
+
         allheadlines.extend(getHeadlines(url))
         for hl in allheadlines:
             try:
@@ -89,13 +89,13 @@ if len(newsurls):
             if difftime > 0:
                 title = hl["title"].replace("&#039;", "’").replace("&#x27;", "’").replace("&quot;", '”')
                 title = title.replace("&#x2f;", "&").replace("&amp;", "&")        # must be the last replace
-                printheadlines.append("### " + title + " — " + pdate + "\n### " + hl["link"])
+                printheadlines.append(title + " — " + pdate + "\n" + hl["link"])
 
         if len(printheadlines) > 0:
             print(f"## {key}")
             sep_line("##", CHAR_BELOW_FEED, 57)
             for hl in printheadlines:
-                print(hl + DELIMITER_ITEM)
+                print(f"{hl}\n")
             sep_line("", CHAR_BELOW_SECTION, 59)
 
         printheadlines = []
@@ -104,7 +104,7 @@ if len(newsurls):
 # Write .ini file
 config_object["PARAMETERS"] = {
     "time2show": time2show,
-    "lastseen": datetime.now().timestamp()
+    "lastseen": datetime.now().timestamp(),
 }
 
 with open(inifile, 'w') as conf:
