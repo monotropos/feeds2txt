@@ -19,6 +19,23 @@ CHAR_BELOW_SECTION = "–"
 CHAR_BELOW_FEED = "—"
 
 
+# replacements dictionary
+replacements = {
+    'ά'      : 'ά',
+    'έ'      : 'έ',
+    'ή'      : 'ή',
+    'ί'      : 'ί',
+    'ό'      : 'ό',
+    'ύ'      : 'ύ',
+    'ώ'      : 'ώ',
+    '&#039;' : '’',
+    '&#x27;' : '’',
+    '&quot;' : '”',
+    '&#x2f;' : '&',
+    '&amp;'  : '&'        # this must be the last replacement
+}
+
+
 # Function to output separator lines
 def sep_line(start, character, n):
     print(start, character*n)
@@ -71,6 +88,11 @@ printheadlines = []
 # Iterate over the allheadlines list and print each headline
 if len(newsurls):
     for key, url in newsurls.items():
+
+        # Is it a comment?
+        if key == "#":
+            continue
+
         # When url is "--" just print a line divider
         if url == "--":
             sep_line("#", CHAR_ABOVE_TITLE, 58)
@@ -87,8 +109,11 @@ if len(newsurls):
             d = parser.parse(pdate).timestamp()
             difftime = d - lastseen
             if difftime > 0:
-                title = hl["title"].replace("&#039;", "’").replace("&#x27;", "’").replace("&quot;", '”')
-                title = title.replace("&#x2f;", "&").replace("&amp;", "&")        # must be the last replace
+                # title = hl["title"].replace("&#039;", "’").replace("&#x27;", "’").replace("&quot;", '”')
+                # title = title.replace("&#x2f;", "&").replace("&amp;", "&")        # must be the last replace
+                title = hl["title"]
+                for word, repl in replacements.items():
+                    title = title.replace(word, repl)
                 printheadlines.append(title + " — " + pdate + "\n" + hl["link"])
 
         if len(printheadlines) > 0:
