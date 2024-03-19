@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import feedparser
+from bs4 import BeautifulSoup
 from time import strftime, localtime
 from datetime import datetime
 from dateutil import parser
@@ -21,6 +22,7 @@ CHAR_BELOW_FEED = "—"
 
 # replacements dictionary
 replacements = {
+    "\n\n"   : "\n",
     'ά'      : 'ά',
     'έ'      : 'έ',
     'ή'      : 'ή',
@@ -114,7 +116,14 @@ if len(newsurls):
                 title = hl["title"]
                 for word, repl in replacements.items():
                     title = title.replace(word, repl)
-                printheadlines.append(title + " — " + pdate + "\n" + hl["link"])
+                printheadlines.append("### " + title + " — " + pdate + "\n" + hl["link"])
+                # if there is a description, convert it to text and print it
+                if "description" in hl:
+                    t = BeautifulSoup(hl["description"], "lxml")
+                    desc = t.get_text()
+                    for word, repl in replacements.items():
+                        desc = desc.replace(word, repl)
+                    printheadlines.append("\n" + desc)
 
         if len(printheadlines) > 0:
             print(f"## {key}")
