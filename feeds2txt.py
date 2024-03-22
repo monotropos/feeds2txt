@@ -32,6 +32,7 @@ replacements = {
     'ώ'      : 'ώ',
     '&#039;' : '’',
     '&#x27;' : '’',
+    '&euro;' : '€'
     '&quot;' : '”',
     '&#x2f;' : '&',
     '&amp;'  : '&'        # this must be the last replacement
