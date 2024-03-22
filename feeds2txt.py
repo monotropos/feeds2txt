@@ -22,7 +22,7 @@ CHAR_BELOW_FEED = "—"
 
 # replacements dictionary
 replacements = {
-    "\n\n"   : "\n",
+    "\n"     : ' ',
     'ά'      : 'ά',
     'έ'      : 'έ',
     'ή'      : 'ή',
@@ -121,9 +121,10 @@ if len(newsurls):
                 if "description" in hl:
                     t = BeautifulSoup(hl["description"], "lxml")
                     desc = t.get_text()
-                    for word, repl in replacements.items():
-                        desc = desc.replace(word, repl)
-                    printheadlines.append("\n" + desc)
+                    if desc:
+                        for word, repl in replacements.items():
+                            desc = desc.replace(word, repl)
+                        printheadlines.append("> " + desc)
 
         if len(printheadlines) > 0:
             print(f"## {key}")
